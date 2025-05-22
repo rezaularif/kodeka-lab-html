@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="80" viewBox="0 0 220 80">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8d46e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d9a45b;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="pattern1" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="10" style="stroke:#f3c969; stroke-width:8" />
+    </pattern>
+    <clipPath id="roundedRect">
+      <rect x="0" y="0" rx="40" ry="40" width="220" height="80" />
+    </clipPath>
+  </defs>
+  
+  <!-- Background with gradient -->
+  <rect x="0" y="0" rx="40" ry="40" width="220" height="80" fill="url(#grad1)" />
+  
+  <!-- Pattern overlay -->
+  <rect x="0" y="0" rx="40" ry="40" width="220" height="80" fill="url(#pattern1)" opacity="0.1" />
+  
+  <!-- Abstract art elements -->
+  <g clip-path="url(#roundedRect)">
+    <!-- Left side abstract shapes -->
+    <path d="M0,30 Q20,0 40,30 T80,30" fill="none" stroke="#f3d88a" stroke-width="2" opacity="0.7" />
+    <path d="M-10,40 Q30,10 70,40 T110,40" fill="none" stroke="#e6c675" stroke-width="3" opacity="0.5" />
+    
+    <!-- Right side abstract shapes -->
+    <path d="M100,10 Q130,40 160,10" fill="none" stroke="#d4a149" stroke-width="2" opacity="0.6" />
+    <path d="M110,20 Q140,50 170,20" fill="none" stroke="#c99642" stroke-width="3" opacity="0.4" />
+  </g>
+  
+  <!-- Pink accent mark -->
+  <path d="M195 20 L205 40 L195 60" stroke="#e91e63" stroke-width="2" fill="none" />
+</svg>
