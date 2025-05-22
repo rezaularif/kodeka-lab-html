@@ -1697,6 +1697,15 @@ footer {
     .footer-logo {
         margin-bottom: 20px;
     }
+    
+    .contact-form {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .contact-info {
+        margin-top: 40px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1746,6 +1755,27 @@ footer {
     
     .features-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .faq-container {
+        flex-direction: column;
+    }
+    
+    .faq-left,
+    .faq-right {
+        width: 100%;
+    }
+    
+    .faq-left {
+        margin-bottom: 30px;
+    }
+    
+    .logo-marquee .fixed-text {
+        font-size: 1.5rem;
+    }
+    
+    .marquee-item img {
+        max-height: 30px;
     }
 }
 
@@ -1802,5 +1832,41 @@ footer {
     
     .badge-container {
         margin: 10px 0;
+    }
+    
+    .feature-card {
+        padding: 25px 20px;
+    }
+    
+    .feature-icon .icon-circle {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .feature-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .cta-button {
+        font-size: 0.9rem;
+        padding: 12px 20px;
+    }
+    
+    .section {
+        padding: 60px 0;
+    }
+    
+    .testimonial-content p {
+        font-size: 0.95rem;
+    }
+    
+    .testimonial-author img {
+        width: 60px;
+        height: 60px;
     }
 }
