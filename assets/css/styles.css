@@ -701,6 +701,13 @@ header.sticky .nav-links {
 @media (max-width: 992px) {
     .features-grid {
         grid-template-columns: 1fr;
+        grid-template-areas:
+            "customizable"
+            "secure"
+            "faster"
+            "development";
+        gap: 20px;
+        flex-wrap: wrap;
     }
     
     .wide-card {
@@ -907,6 +914,13 @@ header.sticky .nav-links {
 @media (max-width: 576px) {
     .features-grid {
         grid-template-columns: 1fr;
+        grid-template-areas:
+            "customizable"
+            "secure"
+            "faster"
+            "development";
+        gap: 20px;
+        flex-wrap: wrap;
     }
 }
 
@@ -1900,6 +1914,13 @@ footer {
     
     .features-grid {
         grid-template-columns: 1fr;
+        grid-template-areas:
+            "customizable"
+            "secure"
+            "faster"
+            "development";
+        gap: 20px;
+        flex-wrap: wrap;
     }
     
     .faq-container {
