@@ -1,5 +1,8 @@
 // GSAP Animations and Smooth scrolling for navigation links
 document.addEventListener('DOMContentLoaded', function() {
+    // Remove any unwanted scroll navigation or sidebar elements
+    removeUnwantedScrollNavigation();
+    
     // Initialize GSAP animations for hero section
     initHeroAnimations();
     
@@ -50,17 +53,17 @@ document.addEventListener('DOMContentLoaded', function() {
             ease: "sine.inOut"
         });
         
-        // Parallax effect on scroll
-        gsap.to('.hero', {
-            scrollTrigger: {
-                trigger: '.hero',
-                start: "top top",
-                end: "bottom top",
-                scrub: true
-            },
-            backgroundPosition: "50% 100%",
-            ease: "none"
-        });
+        // Parallax effect on scroll - TEMPORARILY DISABLED
+        // gsap.to('.hero', {
+        //     scrollTrigger: {
+        //         trigger: '.hero',
+        //         start: "top top",
+        //         end: "bottom top",
+        //         scrub: true
+        //     },
+        //     backgroundPosition: "50% 100%",
+        //     ease: "none"
+        // });
     }
     
     const navLinks = document.querySelectorAll('.nav-links a, .footer-links a, .hero-buttons a');
@@ -197,4 +200,154 @@ document.addEventListener('DOMContentLoaded', function() {
             item.classList.add(portfolioCategories[index]);
         }
     });
+
+    // Function to remove unwanted scroll navigation elements
+    function removeUnwantedScrollNavigation() {
+        // Disable any GSAP ScrollTrigger navigation if it exists
+        if (window.ScrollTrigger && ScrollTrigger.getAll) {
+            try {
+                ScrollTrigger.getAll().forEach(trigger => {
+                    if (trigger.vars && (trigger.vars.pin || trigger.vars.navigation || trigger.vars.nav)) {
+                        trigger.kill();
+                    }
+                });
+            } catch (e) {
+                console.log('ScrollTrigger cleanup error:', e);
+            }
+        }
+
+        // List of selectors for potential unwanted navigation elements
+        const unwantedSelectors = [
+            '.scroll-nav',
+            '.floating-nav',
+            '.sidebar-nav',
+            '.scroll-indicator',
+            '.section-nav',
+            '.scroll-navigation',
+            '.floating-menu',
+            '.gsap-scroll-nav',
+            '.scroll-spy',
+            '.page-nav',
+            '.section-indicator',
+            '[class*="scroll-nav"]',
+            '[class*="floating-nav"]',
+            '[class*="sidebar-nav"]',
+            '[class*="scroll-indicator"]',
+            '[class*="section-nav"]',
+            '[class*="scroll-spy"]',
+            '[class*="page-nav"]',
+            '[class*="gsap"]',
+            '[id*="scroll-nav"]',
+            '[id*="floating-nav"]',
+            '[id*="sidebar"]',
+            '[id*="gsap"]',
+            '[data-scroll-nav]',
+            '[data-section-nav]',
+            '[data-spy]'
+        ];
+
+        // Remove elements matching these selectors
+        unwantedSelectors.forEach(selector => {
+            try {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(element => {
+                    if (element && !element.classList.contains('mobile-menu') && element.tagName !== 'HEADER') {
+                        element.remove();
+                    }
+                });
+            } catch (e) {
+                // Ignore invalid selectors
+            }
+        });
+
+        // Aggressive approach: Remove any fixed positioned elements on the right side
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(element => {
+            if (element.tagName !== 'HEADER' && !element.classList.contains('mobile-menu')) {
+                const computedStyle = window.getComputedStyle(element);
+                const rect = element.getBoundingClientRect();
+                
+                // Check if element is positioned on the right side and might be a navigation
+                if (computedStyle.position === 'fixed' && 
+                    (rect.right > window.innerWidth - 200 || 
+                     computedStyle.right !== 'auto' || 
+                     element.style.right)) {
+                    
+                    // Additional check: if it looks like navigation (contains nav-like text)
+                    const text = element.textContent || '';
+                    const navKeywords = ['features', 'process', 'work', 'pricing', 'contact', 'home', 'about'];
+                    const hasNavText = navKeywords.some(keyword => 
+                        text.toLowerCase().includes(keyword.toLowerCase())
+                    );
+                    
+                    if (hasNavText || element.children.length > 2) {
+                        console.log('Removing potential sidebar navigation:', element);
+                        element.remove();
+                    }
+                }
+            }
+        });
+
+        // Also set up an observer to remove any dynamically added navigation
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) { // Element node
+                        // Check if the added node or its children match unwanted navigation patterns
+                        unwantedSelectors.forEach(selector => {
+                            try {
+                                if (node.matches && node.matches(selector) && !node.classList.contains('mobile-menu') && node.tagName !== 'HEADER') {
+                                    node.remove();
+                                }
+                                const childElements = node.querySelectorAll ? node.querySelectorAll(selector) : [];
+                                childElements.forEach(child => {
+                                    if (!child.classList.contains('mobile-menu') && child.tagName !== 'HEADER') {
+                                        child.remove();
+                                    }
+                                });
+                            } catch (e) {
+                                // Ignore invalid selectors
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+        // Start observing
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        // Also set up a periodic check to remove any persistent navigation
+        setInterval(() => {
+            // Quick check for any elements on the right side that might be navigation
+            const rightSideElements = Array.from(document.querySelectorAll('*')).filter(element => {
+                if (element.tagName === 'HEADER' || element.classList.contains('mobile-menu')) {
+                    return false;
+                }
+                
+                const rect = element.getBoundingClientRect();
+                const computedStyle = window.getComputedStyle(element);
+                
+                return computedStyle.position === 'fixed' && 
+                       rect.right > window.innerWidth - 200 &&
+                       rect.height > 100; // Likely a navigation if it's tall enough
+            });
+
+            rightSideElements.forEach(element => {
+                const text = element.textContent || '';
+                const navKeywords = ['features', 'process', 'work', 'pricing', 'contact'];
+                const hasNavText = navKeywords.some(keyword => 
+                    text.toLowerCase().includes(keyword.toLowerCase())
+                );
+                
+                if (hasNavText) {
+                    console.log('Periodic removal of sidebar navigation:', element);
+                    element.remove();
+                }
+            });
+        }, 1000); // Check every second
+    }
 });
