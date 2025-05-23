@@ -770,21 +770,36 @@ header.sticky .nav-links {
     background-color: var(--dark-bg);
     overflow: hidden;
     position: relative;
+    width: 100%;
+    max-width: 100vw;
 }
 
 @media (max-width: 768px) {
     .logo-marquee {
         padding: 30px 0;
+        overflow: hidden;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
     }
     
     .marquee-wrapper {
         flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
     }
     
     .fixed-text {
-        margin-bottom: 20px;
+        margin: 0 0 20px 0;
         text-align: center;
         width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
     }
 }
 
@@ -794,6 +809,8 @@ header.sticky .nav-links {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .fixed-text {
@@ -812,8 +829,10 @@ header.sticky .nav-links {
 
 .marquee-container {
     width: 100%;
+    max-width: 100%;
     overflow: hidden;
     position: relative;
+    box-sizing: border-box;
 }
 
 .marquee-container::before,
@@ -848,6 +867,7 @@ header.sticky .nav-links {
     align-items: center;
     animation: marquee 30s linear infinite;
     white-space: nowrap;
+    width: max-content; /* Prevent content from wrapping */
 }
 
 @keyframes marquee {
@@ -864,15 +884,26 @@ header.sticky .nav-links {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 40px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    
+    @media (max-width: 768px) {
+        padding: 0 15px;
+    }
 }
 
 .marquee-item img {
     height: 30px;
-    max-width: 120px;
+    max-width: 100px;
+    width: auto;
     object-fit: contain;
     filter: brightness(0) invert(0.7);
     transition: filter 0.3s ease;
+    
+    @media (max-width: 768px) {
+        max-width: 80px;
+        height: 25px;
+    }
 }
 
 .marquee-item img:hover {
