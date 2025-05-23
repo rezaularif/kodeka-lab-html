@@ -1,0 +1,82 @@
+/* Mobile Overflow Fixes */
+
+/* Base mobile fixes */
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Ensure all containers are properly sized */
+.container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+/* Responsive media elements */
+img, video, iframe, object, embed {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Fix for tables */
+table {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure sections don't overflow */
+section {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Fix for flex containers */
+.flex-container, .d-flex, [class*="flex-"] {
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* Specific component fixes */
+.hero {
+    padding: 100px 0 60px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Fix for full-width elements */
+.full-width, [class*="full-width"] {
+    width: 100vw !important;
+    position: relative !important;
+    left: 50% !important;
+    right: 50% !important;
+    margin-left: -50vw !important;
+    margin-right: -50vw !important;
+}
+
+/* Fix for any elements that might be causing horizontal scroll */
+* {
+    max-width: 100%;
+}
+
+/* Ensure text wraps properly */
+h1, h2, h3, h4, h5, h6, p, span, a, li {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Fix for fixed/sticky elements */
+header, .sticky, [class*="fixed-"], [class*="sticky-"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+}

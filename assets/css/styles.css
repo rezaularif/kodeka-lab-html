@@ -1,3 +1,16 @@
+/* Mobile First: Prevent horizontal overflow */
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Ensure responsive images */
+img, video, iframe {
+    max-width: 100%;
+    height: auto;
+}
+
 /* Global Styles */
 :root {
     --primary-color: #4e57fe;
@@ -34,6 +47,10 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    width: 100%;
+    position: relative;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 /* Apply Libre Caslon Text to all italic elements */
@@ -699,6 +716,13 @@ header.sticky .nav-links {
 }
 
 @media (max-width: 992px) {
+    /* Ensure containers don't cause horizontal scroll */
+    .container {
+        width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+    
     .features-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
@@ -707,6 +731,8 @@ header.sticky .nav-links {
             "faster"
             "development";
         gap: 20px;
+        width: 100%;
+        overflow: hidden;
         flex-wrap: wrap;
     }
     
